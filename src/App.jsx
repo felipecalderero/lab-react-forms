@@ -25,8 +25,31 @@ function App() {
   const handleGraduationYearInput = (e) => setGraduationYear(e.target.value);
   const handleGraduatedInput = (e) => setGraduated(e.target.checked);
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
+
+    const newStudent = {
+      fullName,
+      email,
+      phone,
+      program,
+      image,
+      graduationYear,
+      graduated,
+    };
+
+    console.log("Submitted", newStudent);
+
+    const updatedStudents = [...students, newStudent];
+    setStudents(updatedStudents);
+
+    setFullName("");
+    setImage("");
+    setPhone(1234567);
+    setEmail("");
+    setProgram("-- None --");
+    setGraduationYear(2023);
+    setGraduated(false);
   };
 
   return (
@@ -34,7 +57,7 @@ function App() {
       <Navbar />
 
       {/* FORM */}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <span>Add a Student</span>
         <div>
           <label>
@@ -43,6 +66,7 @@ function App() {
               name="fullName"
               type="text"
               placeholder="Full Name"
+              value={fullName}
               onChange={handleFullNameInput}
             />
           </label>
@@ -53,6 +77,7 @@ function App() {
               name="image"
               type="url"
               placeholder="Profile Image"
+              value={image}
               onChange={handleImageInput}
             />
           </label>
@@ -63,6 +88,7 @@ function App() {
               name="phone"
               type="tel"
               placeholder="Phone"
+              value={phone}
               onChange={handlePhoneInput}
             />
           </label>
@@ -73,6 +99,7 @@ function App() {
               name="email"
               type="email"
               placeholder="Email"
+              value={email}
               onChange={handleEmailInput}
             />
           </label>
@@ -81,7 +108,11 @@ function App() {
         <div>
           <label>
             Program
-            <select name="program" onChange={handleProgramInput}>
+            <select
+              name="program"
+              value={program}
+              onChange={handleProgramInput}
+            >
               <option value="">-- None --</option>
               <option value="Web Dev">Web Dev</option>
               <option value="UXUI">UXUI</option>
@@ -99,6 +130,7 @@ function App() {
               maxLength={4}
               min={2023}
               max={2030}
+              value={graduationYear}
               onChange={handleGraduationYearInput}
             />
           </label>
@@ -108,6 +140,7 @@ function App() {
             <input
               name="graduated"
               type="checkbox"
+              checked={graduated}
               onChange={handleGraduatedInput}
             />
           </label>
