@@ -1,45 +1,39 @@
 import { useState } from "react";
 
 const AddStudent = (props) => {
-  const [fullName, setFullName] = useState("");
-  const [image, setImage] = useState("");
-  const [phone, setPhone] = useState(1234567);
-  const [email, setEmail] = useState("");
-  const [program, setProgram] = useState("-- None --");
-  const [graduationYear, setGraduationYear] = useState(2023);
-  const [graduated, setGraduated] = useState(false);
+  const [studentInfo, setStudentInfo] = useState({
+    fullName: "",
+    image: "",
+    phone: 1234567,
+    email: "",
+    program: "-- None --",
+    graduationYear: 2023,
+    graduated: false,
+  });
 
-  const handleFullNameInput = (e) => setFullName(e.target.value);
-  const handleImageInput = (e) => setImage(e.target.value);
-  const handlePhoneInput = (e) => setPhone(e.target.value);
-  const handleEmailInput = (e) => setEmail(e.target.value);
-  const handleProgramInput = (e) => setProgram(e.target.value);
-  const handleGraduationYearInput = (e) => setGraduationYear(e.target.value);
-  const handleGraduatedInput = (e) => setGraduated(e.target.checked);
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setStudentInfo({
+      ...studentInfo,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const newStudent = {
-      fullName,
-      email,
-      phone,
-      program,
-      image,
-      graduationYear,
-      graduated,
-    };
+    console.log("Submitted", studentInfo);
+    props.addStudent(studentInfo);
 
-    console.log("Submitted", newStudent);
-    props.addStudent(newStudent);
-
-    setFullName("");
-    setImage("");
-    setPhone(1234567);
-    setEmail("");
-    setProgram("-- None --");
-    setGraduationYear(2023);
-    setGraduated(false);
+    setStudentInfo({
+      fullName: "",
+      image: "",
+      phone: 1234567,
+      email: "",
+      program: "-- None --",
+      graduationYear: 2023,
+      graduated: false,
+    });
   };
 
   return (
@@ -53,8 +47,8 @@ const AddStudent = (props) => {
               name="fullName"
               type="text"
               placeholder="Full Name"
-              value={fullName}
-              onChange={handleFullNameInput}
+              value={studentInfo.fullName}
+              onChange={handleInputChange}
             />
           </label>
 
@@ -64,8 +58,8 @@ const AddStudent = (props) => {
               name="image"
               type="url"
               placeholder="Profile Image"
-              value={image}
-              onChange={handleImageInput}
+              value={studentInfo.image}
+              onChange={handleInputChange}
             />
           </label>
 
@@ -75,8 +69,8 @@ const AddStudent = (props) => {
               name="phone"
               type="tel"
               placeholder="Phone"
-              value={phone}
-              onChange={handlePhoneInput}
+              value={studentInfo.phone}
+              onChange={handleInputChange}
             />
           </label>
 
@@ -86,8 +80,8 @@ const AddStudent = (props) => {
               name="email"
               type="email"
               placeholder="Email"
-              value={email}
-              onChange={handleEmailInput}
+              value={studentInfo.email}
+              onChange={handleInputChange}
             />
           </label>
         </div>
@@ -97,8 +91,8 @@ const AddStudent = (props) => {
             Program
             <select
               name="program"
-              value={program}
-              onChange={handleProgramInput}
+              value={studentInfo.program}
+              onChange={handleInputChange}
             >
               <option value="">-- None --</option>
               <option value="Web Dev">Web Dev</option>
@@ -117,8 +111,8 @@ const AddStudent = (props) => {
               maxLength={4}
               min={2023}
               max={2030}
-              value={graduationYear}
-              onChange={handleGraduationYearInput}
+              value={studentInfo.graduationYear}
+              onChange={handleInputChange}
             />
           </label>
 
@@ -127,8 +121,8 @@ const AddStudent = (props) => {
             <input
               name="graduated"
               type="checkbox"
-              checked={graduated}
-              onChange={handleGraduatedInput}
+              checked={studentInfo.graduated}
+              onChange={handleInputChange}
             />
           </label>
 
